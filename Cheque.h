@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 class Cheque
 {
 private: 
@@ -11,3 +13,4 @@ public:
 	int getMontant() const;
 };
 
+std::ostream& operator << (std::ostream& flux, const Cheque& cheque);

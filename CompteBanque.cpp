@@ -1,14 +1,13 @@
 #include "CompteBanque.h"
+#include <string>
+
+using namespace std;
 
 CompteBanque::CompteBanque(const int solde) : _solde(solde) {
 }
 
 int CompteBanque::getSolde() const {
 	return _solde;
-}
-
-void CompteBanque::reduire(Cheque cheque) {
-	_solde -= cheque.getMontant();
 }
 
 CompteBanque& CompteBanque::operator+=(const int montant)
@@ -29,20 +28,10 @@ CompteBanque& CompteBanque::operator-=(const Cheque &cheque)
 	return *this;
 }
 
-bool CompteBanque::operator>=(const Cheque &cheque)
-{
-	return _solde >= cheque.getMontant();
-}
-
 CompteBanque& CompteBanque::operator-=(const CarteDeCredit &carte)
 {
 	_solde -= carte.getSolde();
 	return *this;
-}
-
-bool CompteBanque::operator>(const CarteDeCredit &carte)
-{
-	return _solde > carte.getSolde();
 }
 
 CompteBanque& CompteBanque::operator-=(const TransfertInterac &transfert)
@@ -57,13 +46,35 @@ CompteBanque& CompteBanque::operator+=(const TransfertInterac& transfert)
 	return *this;
 }
 
-bool CompteBanque::operator<(const CompteBanque& compte)
+ostream& operator<<(ostream& flux, const CompteBanque& compte)
 {
-	return _solde < compte._solde;
+	flux << "Compte de Banque: " << compte._solde << "$";
+	return flux;
+}
+
+istream& operator>>(istream& flux, CompteBanque& compte)
+{
+	flux >> compte._solde;
+	return flux;
 }
 
 CompteBanque operator+(const CompteBanque& compte1, const CompteBanque& compte2)
 {
 	int solde = compte1.getSolde() + compte2.getSolde();
 	return CompteBanque(solde);
+}
+
+bool operator>=(const CompteBanque& compte, const Cheque& cheque)
+{
+	return compte.getSolde() >= cheque.getMontant();
+}
+
+bool operator>(const CompteBanque& compte, const CarteDeCredit& carte)
+{
+	return compte.getSolde() > carte.getSolde();
+}
+
+bool operator<(const CompteBanque& a, const CompteBanque& b)
+{
+	return a.getSolde() < b.getSolde();
 }

@@ -1,4 +1,7 @@
 #pragma once
+
+#include <iostream>
+
 class CarteDeCredit
 {
 private: 
@@ -9,6 +12,7 @@ public:
 
 	int getSolde() const;
 
-	CarteDeCredit& operator = (const int montant);
+	void operator = (const int montant);
 };
 
+std::ostream& operator << (std::ostream& flux, const CarteDeCredit& carte);

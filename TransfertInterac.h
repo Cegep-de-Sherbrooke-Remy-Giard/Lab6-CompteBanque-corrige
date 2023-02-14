@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 class TransfertInterac
 {
 private:
@@ -10,3 +12,5 @@ public:
 
 	int getMontant() const;
 };
+
+std::ostream& operator << (std::ostream& flux, const TransfertInterac& transfert);
